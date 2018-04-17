@@ -3,6 +3,9 @@ package edu.illinois.cs.cs125.lab12;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +16,10 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 /**
  * Main class for our UI design lab.
@@ -37,8 +44,16 @@ public final class MainActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         setContentView(R.layout.activity_main);
+// Attach the handler to our UI button
+        final Button startAPICall = findViewById(R.id.get_weather);
+        startAPICall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Log.d(TAG, "Start API button clicked");
+                startAPICall();
+            }
+        });
 
-        startAPICall();
     }
 
     /**
@@ -53,6 +68,7 @@ public final class MainActivity extends AppCompatActivity {
      * Make a call to the weather API.
      */
     void startAPICall() {
+
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -76,5 +92,7 @@ public final class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
+
 }
